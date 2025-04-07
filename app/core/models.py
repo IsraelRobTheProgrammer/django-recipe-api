@@ -2,6 +2,7 @@
 All DB Models
 """
 
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -59,3 +60,41 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.email}"
+
+
+class Recipe(models.Model):
+    """Recipe obj"""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    title = models.CharField(max_length=255)
+    desc = models.TextField(blank=True)
+    time_minutes = models.IntegerField()
+    price = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+    )
+    link = models.CharField(max_length=255, blank=True)
+    tags = models.ManyToManyField("Tag")
+
+    def __str__(self):
+        return self.title
+
+
+class Tag(models.Model):
+    """Tag for filtering recipes."""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    # TODO: Define fields here
+
+    def __str__(self):
+        """Unicode representation of Tag."""
+        return self.name
