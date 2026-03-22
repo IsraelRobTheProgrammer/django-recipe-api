@@ -35,16 +35,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
-        # extra_field.setdefault("is_staff", True)
-        # extra_field.setdefault("is_superuser", True)
-        # extra_field.setdefault("is_active", True)
-
-        # if extra_field.get("is_staff") is not True:
-        #     raise ValueError(("Superuser must have is_staff=True."))
-        # if extra_field.get("is_superuser") is not True:
-        #     raise ValueError(("Superuser must have is_superuser=True."))
-        # return self.create_user(email, password, **extra_field)
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Our custome user in the system"""
@@ -92,8 +82,6 @@ class Tag(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-
-    # TODO: Define fields here
 
     def __str__(self):
         """Unicode representation of Tag."""
